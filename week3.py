@@ -1,6 +1,6 @@
 import cv2
 
-#reading images
+#reading images from main folder
 img = cv2.imread('Hackerman.jpg')
 cv2.imshow('Meme', img)
 
