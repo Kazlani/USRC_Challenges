@@ -1,6 +1,6 @@
 #basic functions
 import cv2
-img = cv2.imread('..\Photos\cat.jpg')
+img = cv2.imread('../Photos/cat.jpg')
 cv2.imshow('Cat', img)
 
 #convert to greyscale
@@ -22,7 +22,7 @@ dilated=cv2.dilate(canny,(3,3),iterations=1)
 cv2.imshow('Dilated',dilated)
 
 #erode
-#used to diminish edge cases
+#used to diminish edge cases (like opposite of dilating)
 eroded=cv2.erode(dilated,(3,3),iterations=1)
 cv2.imshow('Eroded',eroded)
 

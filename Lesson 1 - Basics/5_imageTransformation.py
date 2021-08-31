@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-img =cv2.imread('..\Photos/park.jpg')
+img =cv2.imread('../Photos/park.jpg')
 
 cv2.imshow('Park',img)
 
@@ -36,6 +36,7 @@ cv2.imshow('Rotate',rotated)
 
 #flipping
 flip=cv2.flip(img,-1)
+cv2.imshow('flip',flip)
 #-1 flips vertically and horizonatally 
 
 '''
@@ -49,5 +50,5 @@ flip=cv2.flip(img,-1)
 
 #cropping 
 cropped = img[200:400,200:400]
-
+cv2.imshow('crop', cropped)
 cv2.waitKey(0)
