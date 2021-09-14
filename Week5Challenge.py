@@ -3,12 +3,12 @@ import cv2
 import numpy as np
 
 # Read image and use canny edge detector
-frame = cv2.imread ('Changed_opencv/Photos/collage.png')
+frame = cv2.imread ('Week_5/Photos/collage.png')
 edges = cv2.Canny(frame,100,200)
 
 
 # Load pentagon from a template
-pentagon = cv2.imread('Changed_opencv/Photos/pentagon.png')
+pentagon = cv2.imread('Week_5/Photos/pentagon.png')
 pentagonCanny = cv2.Canny(pentagon,100,200) 
 #find the contours of our heart image
 pentagonContours, hierarchy = cv2.findContours(pentagonCanny,cv2.RETR_LIST,cv2.CHAIN_APPROX_NONE)
