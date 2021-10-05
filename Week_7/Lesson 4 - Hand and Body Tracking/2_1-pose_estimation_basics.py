@@ -18,7 +18,7 @@ mpDraw = mp.solutions.drawing_utils
 
 while True:
     success, img = cap.read()
-    #resize image to fit
+    #resize image to fit new width and height
     img = cv2.resize(img,(512,342),interpolation=cv2.INTER_AREA)
 
 

@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<robot name="moveable_arm">
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <robotNamespace>/moveable_arm</robotNamespace>
+    </plugin>
+  </gazebo>
+
+  <link name="world" />
+
+  <joint name="fixed" type="fixed">
+    <parent link="world" />
+    <child link="base_link" />
+  </joint>
+
+
+  <link name="base_link">
+    <origin rpy="0 0 0" xyz="0 0 1" />
+    <self_collide>1</self_collide>
+    <visual>
+      <geometry>
+        <cylinder length="2" radius="1" />
+      </geometry>
+    </visual>
+    <inertial>
+      <mass value="20" />
+      <inertia ixx="1.0" ixy="1.0" ixz="1.0" iyy="1.0" iyz="1.0" izz="1.0" />
+    </inertial>
+    <collision>
+      <geometry>
+        <cylinder length="2" radius="1" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_to_shoulder" type="revolute">
+    
+    <parent link="base_link" />
+    <child link="shoulder_link" />
+    <limit effort="1000.0" lower="0" upper="0" velocity="0.5" />
+    <origin rpy="0 0 0" xyz="0 0 1.7" />
+  </joint>
+
+  <link name="shoulder_link">
+    <visual>
+      <origin rpy="0 1.57075 0" xyz="0 0 0" />
+      <geometry>
+        <cylinder length="0.6" radius="0.3" />
+      </geometry>
+    </visual>
+    <inertial>
+      <origin rpy="0 1.57075 0" xyz="0 0 0" />
+      <mass value="5" />
+      <inertia ixx="1.0" ixy="1.0" ixz="1.0" iyy="1.0" iyz="1.0" izz="1.0" />
+    </inertial>
+    <collision>
+      <origin rpy="0 1.57075 0" xyz="0 0 0" />
+      <geometry>
+        <cylinder length="0.6" radius="0.3" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="shoulder_to_beam1" type="continuous">
+    <parent link="shoulder_link" />
+    <child link="beam_link_1" />
+    <axis xyz="-1 0 0" />
+    <!--<limit effort="1000.0" lower="-3.14159" upper="0" velocity="0.5" />-->
+    <origin rpy="-1.57075 0 0" xyz="0 0 0" />
+  </joint>
+
+  <link name="beam_link_1">
+    <self_collide>1</self_collide>
+    <visual>
+      <origin rpy="0 0 0.785" xyz="-0.3 0 3.5" />
+      <geometry>
+        <box size="0.3 0.3 7" />
+      </geometry>
+    </visual>
+    <inertial>
+      <origin rpy="0 0 0.785" xyz="-0.3 0 3.5" />
+      <mass value="5" />
+      <inertia ixx="1.0" ixy="1.0" ixz="1.0" iyy="1.0" iyz="1.0" izz="1.0" />
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0.785" xyz="-0.3 0 3.5" />
+      <geometry>
+        <box size="0.3 0.3 7" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <link name="beam_link_2">
+    <visual>
+      <geometry>
+        <box size="0.3 0.3 7" />
+      </geometry>
+    </visual>
+    <inertial>
+      <mass value="1" />
+      <inertia ixx="1.0" ixy="1.0" ixz="1.0" iyy="1.0" iyz="1.0" izz="1.0" />
+    </inertial>
+    <collision>
+      <geometry>
+        <box size="0.3 0.3 7" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="beam_1_to_beam_2" type="fixed">
+    <parent link="beam_link_1" />
+    <child link="beam_link_2" />
+    <origin rpy="0 0 0.785" xyz="0.3 0 3.5" />
+  </joint>
+
+  <gazebo reference="base_link">
+    <selfCollide>1</selfCollide>
+    <self_collide>1</self_collide>
+  </gazebo>
+  <gazebo reference="beam_link_1">
+    <selfCollide>1</selfCollide>
+    <self_collide>1</self_collide>
+  </gazebo>
+  <gazebo reference="movable_arm">
+    <selfCollide>1</selfCollide>
+    <self_collide>1</self_collide>
+  </gazebo>
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="shoulder_to_beam1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+</robot>

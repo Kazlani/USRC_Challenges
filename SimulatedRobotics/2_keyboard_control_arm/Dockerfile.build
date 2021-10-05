@@ -1,0 +1,11 @@
+FROM gazebo_image:latest
+
+RUN apt update
+RUN apt install -y ros-melodic-gazebo-ros-control ros-melodic-effort-controllers ros-melodic-joint-state-controller
+
+# Copy in the files for the keyboard control packages
+RUN mkdir /root/catkin_ws/src/keyboard_control_arm
+COPY keyboard_control_arm /root/catkin_ws/src/keyboard_control_arm
+RUN bash -c "cd ~/catkin_ws && source /opt/ros/melodic/setup.bash && catkin_make"
+
+ENTRYPOINT bash /openvnc.sh;bash
